@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title><%= locals.title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script defer src="https://kit.fontawesome.com/d13d4de4a3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="main-container">
+    <div class="title-txt">
+      <h1>TODO APP</h1>
+    </div>
+
+    <!-- Task input form -->
+    <form action="/create-task" method="post">
+      <div class="input-box">
+        <label for="description">Description</label>
+        <input type="text" name="description" placeholder="What do you need to do?">
+      </div>
+      <!-- Task category input-->
+      <div class="category-date">
+        <div class="category">
+          <label for="task-category">category</label>
+          <select name="category" id="">
+            <option value="">Choose a category</option>
+            <option value="personal">Personal</option>
+            <option value="work">Work</option>
+            <option value="school">School</option>
+            <option value="home">Home</option>
+            <option value="college">College</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="date">
+          <label for="date">Due Date</label>
+          <input type="date" name="date" />
+        </div>
+      </div>
+      <!-- Action Buttons -->
+      <div class="btn-container">
+        <button id="add-btn" type="submit"><i class="fa-solid fa-plus"></i> ADD TASK</button>
+        <button id="delete-btn" formaction="/delete-task" type="submit"><i class="fa-solid fa-trash-can"></i>DELETE TASK</button>        
+      </div>
+      
+      <!-- Displaying the task list -->
+
+      <div class="display-container">
+        <% for(let i of todo_list) {%>
+          <div class="task_item">
+            <div class="checkbox-contain">
+              <input class="checkbox" type="checkbox" value="<%= i._id %>" name="check">
+            </div>
+            <div class="task-text">
+              <p><%= i.description %></p>
+              <p><i class="fa-solid fa-calendar-days"></i> <%= i.date.toString().substring(4,15) %></p>
+            </div>
+            <div class="cat-theme">
+              <% for (let j in theme) { %>
+               <% if(j == i.category) { %>
+                <p style="background-color: <%= theme[j] %>">
+                  <%= i.category %>
+                </p>
+                <% break; %> <% } %>
+                <% } %>
+            </div>
+          </div>
+        
+        <% } %>
+      </div>
+
+    </form>
+  </div>
+</body>
+</html>
